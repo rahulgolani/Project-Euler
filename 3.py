@@ -14,6 +14,8 @@ def getLargestPrime(n):
         while n%i==0:
             n=n//i
             result=i
+    if n>=2:       # If number is itself a prime number it will not be divisible
+        return n
     return result
 
 
