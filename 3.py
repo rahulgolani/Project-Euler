@@ -11,9 +11,10 @@ def getLargestPrime(n):
     while n%2==0:
         n=n//2
     for i in range(3,int(sqrt(n))+1,2):
-        while n%i==0:
-            n=n//i
+        if n%i==0:
             result=i
+            while n%i==0:
+                n=n//i
     if n>=2:       # If number is itself a prime number it will not be divisible
         return n
     return result
