@@ -59,6 +59,8 @@ Hence N = 2^3 * 3^2 * 5^1 * 7^1 = 2520.
 However, this approach requires a function to be constructed to express a given number as a product of prime factors. So we shall consider an alternative approach.
 '''
 
+
+
 def sieveOfEratosthenes(n):
     primeNos=[]
     primes=[True]*(n+1)
@@ -75,6 +77,7 @@ def sieveOfEratosthenes(n):
             primeNos.append(i)
     return primeNos
 
+'''
 def getFactor(n):
     factor={}
     i=0
@@ -114,6 +117,43 @@ def getSmallestDivisibleNumber(n):
         result=result*(i**map[i])
 
     return result
+'''
+
+'''
+Let us consider the case of finding the least value of N for k = 20. We know that N must be divisible by each of the primes, p[i], less than or equal to k.
+
+But what determines the exponent, a[i], in the prime factorisation of N is the greatest perfect power of p[i] that is less than or equal to k. For example, as 2^4 = 16 and 2^5 = 32, we know that a[1] = 4 as no other numbers, 2 ≤ j ≤ 20, can contain more than four repeated factors of 2.
+
+Similarly 3^2 = 9 and 3^3 = 27, so a[2] = 2. And for p[i] ≥ 5, a[i] = 1.
+
+Hence N = 2^4 * 3^2 * 5 * 7 * 11 * 13 * 17 * 19 = 232792560.
+
+For a given p[i] we can determine a[i] in the following way.
+Let p[i]^a[i] = k. By “logging” both sides: a[i] log(p[i]) = log(k).
+So a[i] = log(k) / log(p[i]).
+But as a[i] must be integer, a[i] = floor( log(k) / log(p[i]) ).
+'''
+from math import log,floor
+
+def getSmallestDivisibleNumber(n):
+    primeNos=sieveOfEratosthenes(n)
+    map={}
+    for i in primeNos:
+        map[i]=0
+    k=sqrt(n)
+    for i in map:
+        if i<k:
+            map[i]=floor(log(n)/log(i))
+        else:
+            map[i]=1
+    # print(map)
+    result=1
+    for i in map:
+        result=result*(i**map[i])
+
+    return result
+
+
 
 if __name__ == '__main__':
     print(getSmallestDivisibleNumber(20))
