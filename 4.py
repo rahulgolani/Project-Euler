@@ -70,6 +70,7 @@ def getLargestPalindromic():
         for j in range(b,99,-db):
             if isPalindrome(i*j):
                 result=max(result,i*j)
+                break
     return result
 
 
